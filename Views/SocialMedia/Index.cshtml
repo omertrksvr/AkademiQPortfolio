@@ -1,0 +1,95 @@
+﻿@model List<AkademiqPortfolio.Data.SocialMedium>
+@{
+    ViewData["Title"] = "Sosyal Medya Yönetimi";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="space-y-8">
+    @* Üst Başlık ve Aksiyon Alanı *@
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+        <div>
+            <h2 class="text-3xl font-bold text-white tracking-tight">Sosyal Medya</h2>
+            <p class="text-slate-400 mt-1">Portfolyonuzda sergilenen tüm sosyal medya ve iletişim linklerini buradan yönetin.</p>
+        </div>
+        <a href="/SocialMedia/CreateSocialMedia/"
+           class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl text-sm font-medium transition-all shadow-lg shadow-blue-600/20">
+            <span class="material-symbols-outlined text-[20px]">add</span>
+            <span>Yeni Hesap Ekle</span>
+        </a>
+    </div>
+
+    @* Liste Kartı / Tablo Konteynırı *@
+    <div class="bg-[#1e2130] rounded-2xl border border-[#2e3245] overflow-hidden shadow-sm">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm text-slate-400">
+                <thead class="bg-white/5 text-xs uppercase font-semibold text-white border-b border-[#2e3245]">
+                    <tr>
+                        <th class="px-6 py-5 w-16">#</th>
+                        <th class="px-6 py-5">Platform</th>
+                        <th class="px-6 py-5">URL / Link</th>
+                        <th class="px-6 py-5">İkon Görseli</th>
+                        <th class="px-6 py-5 text-right">İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-[#2e3245]">
+                    @foreach (var item in Model)
+                    {
+                        <tr class="hover:bg-white/[0.02] transition-colors group">
+                            <td class="px-6 py-4 font-medium text-slate-500">@item.Id</td>
+                            <td class="px-6 py-4">
+                                <span class="font-bold text-white group-hover:text-blue-500 transition-colors uppercase tracking-wider text-xs">@item.Platform</span>
+                            </td>
+                            <td class="px-6 py-4">
+                                <a href="@item.Url" target="_blank" class="flex items-center gap-1.5 text-blue-400 hover:text-blue-300 transition-colors">
+                                    <span class="truncate max-w-[250px] text-xs font-medium">@item.Url</span>
+                                    <span class="material-symbols-outlined text-[16px]">open_in_new</span>
+                                </a>
+                            </td>
+                            <td class="px-6 py-4">
+                                @* İkon Görseli Alanı *@
+                                <div class="size-10 rounded-xl bg-[#101322] border border-[#2e3245] flex items-center justify-center overflow-hidden p-1.5 group-hover:border-blue-500/30 transition-all shadow-inner">
+                                    @if (!string.IsNullOrEmpty(item.Icon))
+                                    {
+                                        @* ÖNEMLİ: Veritabanına '\images\github.png' şeklinde ters slash ile kaydetmiş olabilirsiniz.
+                                           Tarayıcılar düz slash '/' ister. Bu yüzden Replace komutu ile bunu düzeltiyoruz.
+                                        *@
+                                        <img src="@item.Icon.Replace("\\", "/")"
+                                             alt="@item.Platform"
+                                             class="w-full h-full object-contain opacity-70 group-hover:opacity-100 transition-all">
+                                    }
+                                    else
+                                    {
+                                        @* Görsel yoksa gösterilecek placeholder *@
+                                        <span class="material-symbols-outlined text-slate-600">image_not_supported</span>
+                                    }
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-right">
+                                <div class="flex justify-end gap-1">
+                                    
+                                    <a href="/SocialMedia/DeleteSocialMedia/@item.Id"
+                                       class="p-2 text-slate-500 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-all"
+                                       title="Sil"
+                                       onclick="return confirm('@item.Platform hesabını silmek istediğinize emin misiniz?')">
+                                        <span class="material-symbols-outlined text-[22px]">delete</span>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        @if (!Model.Any())
+        {
+            <div class="p-20 text-center">
+                <div class="bg-[#101322] size-20 rounded-full flex items-center justify-center mx-auto mb-4 border border-[#2e3245]">
+                    <span class="material-symbols-outlined text-slate-600 text-[40px]">public_off</span>
+                </div>
+                <h4 class="text-white font-bold text-lg">Hesap Bulunamadı</h4>
+                <p class="text-slate-500 max-w-xs mx-auto mt-2">Listeniz şu an boş. LinkedIn veya GitHub gibi hesaplarınızı ekleyerek başlayın.</p>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,36 @@
+﻿@model List<AkademiqPortfolio.Data.SocialMedium>
+
+<nav class="fixed top-0 left-0 w-full z-50 bg-[#0f111a]/80 backdrop-blur-xl border-b border-white/5">
+    <div class="container mx-auto px-6 h-20 flex items-center justify-between">
+
+        <div class="flex items-center gap-3">
+            <div class="size-10 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/20">
+                <span class="text-white font-black text-xl">Ö</span>
+            </div>
+            <div class="flex flex-col">
+                <span class="text-white font-bold tracking-tighter leading-none">ÖMER TÜRKSEVER</span>
+                <span class="text-[10px] text-blue-500 font-bold uppercase tracking-[0.2em]">Portfolio</span>
+            </div>
+        </div>
+
+        <div class="hidden lg:flex items-center gap-10 text-[13px] font-bold text-slate-400 uppercase tracking-widest">
+            <a href="#home" class="hover:text-blue-500 transition-colors">Ana Sayfa</a>
+            <a href="#about" class="hover:text-blue-500 transition-colors">Hakkımda</a>
+            <a href="#skills" class="hover:text-blue-500 transition-colors">Yetenekler</a>
+            <a href="#projects" class="hover:text-blue-500 transition-colors">Projeler</a>
+            <a href="#contact" class="hover:text-blue-500 transition-colors">İletişim</a>
+        </div>
+
+        <div class="flex items-center gap-3">
+            @foreach (var item in Model)
+            {
+                <a href="@item.Url" target="_blank" title="@item.Platform"
+                   class="size-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-blue-600 hover:border-blue-600 transition-all group overflow-hidden">
+                    <img src="@item.Icon.Replace("\\", "/")"
+                         class="size-5 opacity-60 group-hover:opacity-100 invert transition-opacity"
+                         alt="@item.Platform">
+                </a>
+            }
+        </div>
+    </div>
+</nav>

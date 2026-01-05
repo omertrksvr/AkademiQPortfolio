@@ -1,0 +1,83 @@
+﻿@model List<AkademiqPortfolio.Data.About>
+@{
+    ViewData["Title"] = "Hakkımda Yönetimi";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="space-y-8">
+    @* Üst Başlık *@
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+        <div>
+            <h2 class="text-3xl font-bold text-white tracking-tight">Hakkımda Yönetimi</h2>
+            <p class="text-slate-400 mt-1">Portfolyonuzdaki biyografi, profil fotoğrafı ve CV linkini buradan yönetebilirsiniz.</p>
+        </div>
+        @if (!Model.Any())
+        {
+            <a href="/About/CreateAbout/"
+               class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl text-sm font-medium transition-all shadow-lg shadow-blue-600/20">
+                <span class="material-symbols-outlined text-[20px]">add</span>
+                <span>Bilgileri Oluştur</span>
+            </a>
+        }
+    </div>
+
+    @if (Model.Any())
+    {
+        @foreach (var item in Model)
+        {
+            @* Profil Önizleme Kartı *@
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                @* Sol: Profil Fotoğrafı ve Başlık *@
+                <div class="lg:col-span-1 bg-[#1e2130] rounded-2xl border border-[#2e3245] p-8 flex flex-col items-center text-center space-y-4">
+                    <div class="relative group">
+                        <img src="@(string.IsNullOrEmpty(item.ImageUrl) ? "/pro.jpg" : item.ImageUrl)"
+                             class="size-40 rounded-full object-cover border-4 border-[#2e3245] shadow-2xl group-hover:border-blue-600/50 transition-all" />
+                        <div class="absolute inset-0 rounded-full bg-blue-600/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white">@item.Title</h3>
+                        <p class="text-blue-500 font-medium text-sm mt-1">Ana Başlık / Unvan</p>
+                    </div>
+                    <div class="pt-4 w-full">
+                        <a href="/About/UpdateAbout/@item.Id"
+                           class="flex items-center justify-center gap-2 w-full bg-white/5 hover:bg-white/10 text-white px-4 py-3 rounded-xl border border-white/10 text-sm font-bold transition-all">
+                            <span class="material-symbols-outlined text-[18px]">edit</span>
+                            Düzenle
+                        </a>
+                    </div>
+                </div>
+
+                @* Sağ: Biyografi ve Detaylar *@
+                <div class="lg:col-span-2 bg-[#1e2130] rounded-2xl border border-[#2e3245] p-8 space-y-6">
+                    <div>
+                        <h4 class="text-xs uppercase font-bold text-slate-500 tracking-widest mb-4">Biyografi & Hakkımda Metni</h4>
+                        <div class="text-slate-300 leading-relaxed text-sm bg-[#101322] p-6 rounded-xl border border-[#2e3245]">
+                            @item.Description
+                        </div>
+                    </div>
+
+                    <div class="pt-4">
+                        <h4 class="text-xs uppercase font-bold text-slate-500 tracking-widest mb-4">Erişim Linkleri</h4>
+                        <div class="flex items-center gap-4">
+                            <a href="@item.Cvlink" target="_blank" class="flex items-center gap-2 bg-blue-600/10 text-blue-400 px-4 py-2 rounded-lg border border-blue-600/20 text-xs font-bold hover:bg-blue-600/20 transition-all">
+                                <span class="material-symbols-outlined text-[18px]">description</span>
+                                Mevcut CV'yi Görüntüle
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        @* Veri Yoksa Gösterilecek Boş Durum *@
+        <div class="bg-[#1e2130] rounded-2xl border border-[#2e3245] p-20 text-center">
+            <div class="bg-[#101322] size-20 rounded-full flex items-center justify-center mx-auto mb-4 border border-[#2e3245]">
+                <span class="material-symbols-outlined text-slate-600 text-[40px]">person_off</span>
+            </div>
+            <h4 class="text-white font-bold text-lg">Henüz Bilgi Eklenmemiş</h4>
+            <p class="text-slate-500 max-w-xs mx-auto mt-2">Hakkınızdaki bilgileri oluşturmak için yukarıdaki butonu kullanın.</p>
+        </div>
+    }
+</div>

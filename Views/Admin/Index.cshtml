@@ -1,0 +1,186 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="space-y-8">
+    @* Üst Başlık *@
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+        <div>
+            <h2 class="text-3xl font-bold text-white tracking-tight">Genel Bakış</h2>
+            <p class="text-slate-400 mt-1">Bugün portfolyonuzda neler olup bittiğine dair özet.</p>
+        </div>
+        <a href="/Project/ProjectCreate" class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl text-sm font-medium transition-all shadow-lg shadow-blue-600/20">
+            <span class="material-symbols-outlined text-[20px]">add</span>
+            <span>Yeni Proje Ekle</span>
+        </a>
+    </div>
+
+    @* İstatistik Kartları *@
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        @* Projeler *@
+        <div class="bg-[#1e2130] p-6 rounded-2xl border border-[#2e3245] flex items-center justify-between">
+            <div>
+                <p class="text-sm text-slate-500 font-medium">Toplam Proje</p>
+                <h3 class="text-3xl font-bold text-white mt-1">7</h3>
+                <h3 class="text-3xl font-bold text-white mt-1">@ViewBag.ProjectCount</h3>
+            </div>
+            <div class="bg-blue-600/10 p-3 rounded-xl text-blue-500">
+                <span class="material-symbols-outlined text-3xl">folder</span>
+            </div>
+        </div>
+
+        @* Yetenekler *@
+        <div class="bg-[#1e2130] p-6 rounded-2xl border border-[#2e3245] flex items-center justify-between">
+            <div>
+                <p class="text-sm text-slate-500 font-medium">Yetenekler</p>
+                <h3 class="text-3xl font-bold text-white mt-1">3</h3>
+                <h3 class="text-3xl font-bold text-white mt-1">@ViewBag.SkillCount</h3>
+            </div>
+            <div class="bg-purple-600/10 p-3 rounded-xl text-purple-500">
+                <span class="material-symbols-outlined text-3xl">bolt</span>
+            </div>
+        </div>
+
+        @* Mesajlar *@
+        <div class="bg-[#1e2130] p-6 rounded-2xl border border-[#2e3245] flex items-center justify-between">
+            <div>
+                <p class="text-sm text-slate-500 font-medium">Toplam Mesaj</p>
+                <h3 class="text-3xl font-bold text-white mt-1">3</h3>
+                <h3 class="text-3xl font-bold text-white mt-1">@ViewBag.MessageCount</h3>
+            </div>
+            <div class="bg-orange-600/10 p-3 rounded-xl text-orange-500">
+                <span class="material-symbols-outlined text-3xl">mail</span>
+            </div>
+        </div>
+
+        @* Deneyim *@
+        <div class="bg-[#1e2130] p-6 rounded-2xl border border-[#2e3245] flex items-center justify-between">
+            <div>
+                <p class="text-sm text-slate-500 font-medium">Deneyim Yılı</p>
+                <h3 class="text-3xl font-bold text-white mt-1">1+</h3>
+            </div>
+            <div class="bg-emerald-600/10 p-3 rounded-xl text-emerald-500">
+                <span class="material-symbols-outlined text-3xl">history_edu</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        @* Yetenek Dağılımı Grafiği (Daire) *@
+        <div class="lg:col-span-2 bg-[#1e2130] rounded-2xl border border-[#2e3245] p-8">
+            <div class="flex items-center justify-between mb-6">
+                <h4 class="text-lg font-bold text-white">Yetenek Dağılımı</h4>
+                <a href="/Skill/Index" class="text-xs font-bold text-blue-500 hover:underline">Tümünü Yönet</a>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-center justify-around gap-12">
+                @* Dinamik Daire Grafik *@
+                <div class="relative size-48 flex items-center justify-center">
+                    <svg class="size-full -rotate-90" viewBox="0 0 36 36">
+                        @* Arka Plan Halkası *@
+                        <circle cx="18" cy="18" r="16" fill="none" class="stroke-slate-800" stroke-width="2.5"></circle>
+                        @* Dinamik İlerleme Halkası (SkillCount'a göre stroke-dasharray ayarlanabilir) *@
+                        <circle cx="18" cy="18" r="16" fill="none" class="stroke-blue-600" stroke-width="2.5"
+                                stroke-dasharray="100, 100" stroke-linecap="round" style="transition: stroke-dasharray 1s ease-in-out;"></circle>
+                    </svg>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center">
+                        <span class="text-4xl font-black text-white">@ViewBag.SkillCount</span>
+                        <span class="text-[10px] text-slate-500 uppercase font-bold tracking-widest">Yetenek</span>
+                    </div>
+                </div>
+
+                @* Sağ Liste: Veritabanındaki Yetenekler *@
+                <div class="flex-1 space-y-5 w-full">
+                    @* Burada normalde bir foreach döngüsü ile ViewBag.Skills listesini dönebilirsin. 
+                   Örnek olarak senin görselindeki verilere göre tasarladım:
+                *@
+                    <div class="space-y-2 group">
+                        <div class="flex justify-between items-end">
+                            <div class="flex items-center gap-2">
+                                <span class="size-2 rounded-full bg-blue-500"></span>
+                                <span class="text-sm font-bold text-slate-200 group-hover:text-white transition-colors">Python</span>
+                            </div>
+                            <span class="text-xs font-black text-blue-500 bg-blue-500/10 px-2 py-0.5 rounded">70%</span>
+                        </div>
+                        <div class="h-2 w-full bg-slate-800/50 rounded-full overflow-hidden border border-white/5">
+                            <div class="bg-gradient-to-r from-blue-600 to-blue-400 h-full rounded-full" style="width: 70%"></div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2 group">
+                        <div class="flex justify-between items-end">
+                            <div class="flex items-center gap-2">
+                                <span class="size-2 rounded-full bg-indigo-500"></span>
+                                <span class="text-sm font-bold text-slate-200 group-hover:text-white transition-colors">C#</span>
+                            </div>
+                            <span class="text-xs font-black text-indigo-500 bg-indigo-500/10 px-2 py-0.5 rounded">80%</span>
+                        </div>
+                        <div class="h-2 w-full bg-slate-800/50 rounded-full overflow-hidden border border-white/5">
+                            <div class="bg-gradient-to-r from-indigo-600 to-indigo-400 h-full rounded-full" style="width: 80%"></div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2 group">
+                        <div class="flex justify-between items-end">
+                            <div class="flex items-center gap-2">
+                                <span class="size-2 rounded-full bg-purple-500"></span>
+                                <span class="text-sm font-bold text-slate-200 group-hover:text-white transition-colors">R</span>
+                            </div>
+                            <span class="text-xs font-black text-purple-500 bg-purple-500/10 px-2 py-0.5 rounded">50%</span>
+                        </div>
+                        <div class="h-2 w-full bg-slate-800/50 rounded-full overflow-hidden border border-white/5">
+                            <div class="bg-gradient-to-r from-purple-600 to-purple-400 h-full rounded-full" style="width: 50%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @* Son Mesajlar Listesi *@
+        <div class="bg-[#1e2130] rounded-2xl border border-[#2e3245] p-8">
+            <div class="flex items-center justify-between mb-6">
+                <h4 class="text-lg font-bold text-white">Yeni Mesajlar</h4>
+                <a href="/Message/Index" class="text-xs font-bold text-blue-500 hover:underline">Tümünü Gör</a>
+            </div>
+            <div class="space-y-6">
+                @* örnek mesaj 3 *@
+                <div class="flex items-start gap-4">
+                    <div class="size-10 rounded-full bg-green-600/20 flex items-center justify-center text-green-500 font-bold text-xs shrink-0">MK</div>
+                    <div>
+                        <div class="flex items-center justify-between w-full">
+                            <span class="text-sm font-bold text-white">Mehmet Kaya</span>
+                            <span class="text-[10px] text-slate-500">5 dk önce</span>
+                        </div>
+                        <p class="text-xs text-slate-400 line-clamp-1">Teklif dosyasını inceledim, bazı revizeler var.</p>
+                    </div>
+                </div>
+
+                @* örnek mesaj 4 *@
+                <div class="flex items-start gap-4">
+                    <div class="size-10 rounded-full bg-red-600/20 flex items-center justify-center text-red-500 font-bold text-xs shrink-0">SE</div>
+                    <div>
+                        <div class="flex items-center justify-between w-full">
+                            <span class="text-sm font-bold text-white">Selin Erdem</span>
+                            <span class="text-[10px] text-slate-500">1 gün önce</span>
+                        </div>
+                        <p class="text-xs text-slate-400 line-clamp-1">Toplantı saati değişti, geri dönüş bekliyorum.</p>
+                    </div>
+                </div>
+
+                @* örnek mesaj 5 *@
+                <div class="flex items-start gap-4">
+                    <div class="size-10 rounded-full bg-yellow-600/20 flex items-center justify-center text-yellow-500 font-bold text-xs shrink-0">KY</div>
+                    <div>
+                        <div class="flex items-center justify-between w-full">
+                            <span class="text-sm font-bold text-white">Kaan Yılmaz</span>
+                            <span class="text-[10px] text-slate-500">3 gün önce</span>
+                        </div>
+                        <p class="text-xs text-slate-400 line-clamp-1">Ödeme planı netleşmeden ilerleyemeyiz.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

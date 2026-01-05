@@ -1,0 +1,57 @@
+﻿@model AkademiqPortfolio.Data.SocialMedium
+@{
+    ViewData["Title"] = "Sosyal Medya Hesabı Ekle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="max-w-4xl mx-auto space-y-8">
+    <div class="flex items-center justify-between">
+        <div>
+            <h2 class="text-3xl font-bold text-white tracking-tight">Hesap Ekle</h2>
+            <p class="text-slate-400 mt-1">İletişim kanallarınıza yeni bir platform tanımlayın.</p>
+        </div>
+        <a href="/SocialMedia/Index" class="flex items-center gap-2 text-slate-400 hover:text-white transition-colors">
+            <span class="material-symbols-outlined">arrow_back</span>
+            <span class="text-sm font-medium">Listeye Dön</span>
+        </a>
+    </div>
+
+    <div class="bg-[#1e2130] rounded-2xl border border-[#2e3245] p-8 shadow-sm">
+        <form method="post" class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                @* Platform Adı *@
+                <div class="space-y-2">
+                    <label class="text-sm font-semibold text-slate-300">Platform Adı</label>
+                    <input type="text" name="Platform"
+                           placeholder="Örn: LinkedIn, GitHub, X"
+                           class="w-full bg-[#101322] border border-[#2e3245] rounded-xl px-4 py-3 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+                           required />
+                </div>
+
+                @* İkon (Material Symbols) *@
+                <div class="space-y-2">
+                    <label class="text-sm font-semibold text-slate-300">İkon Adı (Material Symbols)</label>
+                    <input type="text" name="Icon"
+                           placeholder="Örn: share, link, public"
+                           class="w-full bg-[#101322] border border-[#2e3245] rounded-xl px-4 py-3 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all" />
+                </div>
+
+                @* URL *@
+                <div class="space-y-2 md:col-span-2">
+                    <label class="text-sm font-semibold text-slate-300">Profil / Hesap Linki (URL)</label>
+                    <input type="url" name="Url"
+                           placeholder="https://platform.com/kullaniciadi"
+                           class="w-full bg-[#101322] border border-[#2e3245] rounded-xl px-4 py-3 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+                           required />
+                </div>
+            </div>
+
+            <div class="flex items-center justify-end gap-4 pt-4 border-t border-[#2e3245]">
+                <a href="/SocialMedia/Index" class="px-6 py-2.5 text-sm font-medium text-slate-400 hover:text-white transition-colors">Vazgeç</a>
+                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-2.5 rounded-xl text-sm font-bold shadow-lg shadow-blue-600/20 transition-all">
+                    Hesabı Kaydet
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

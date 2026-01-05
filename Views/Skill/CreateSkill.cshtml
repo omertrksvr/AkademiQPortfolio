@@ -1,0 +1,74 @@
+﻿@model AkademiqPortfolio.Data.SkillTable
+@{
+    ViewData["Title"] = "Yeni Yetenek Ekle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="max-w-3xl mx-auto space-y-8 pb-20">
+    @* Üst Başlık ve Geri Dönüş *@
+    <div class="flex items-center justify-between gap-4">
+        <div>
+            <h2 class="text-3xl font-bold text-white tracking-tight">Yeni Yetenek Ekle</h2>
+            <p class="text-slate-400 mt-1">Portfolyonuzda sergilenecek yeni bir teknik beceri tanımlayın.</p>
+        </div>
+        <a href="/Skill/Index" class="flex items-center gap-2 text-slate-400 hover:text-white transition-all text-sm font-medium group">
+            <span class="material-symbols-outlined text-[20px] group-hover:-translate-x-1 transition-transform">arrow_back</span>
+            <span>Listeye Dön</span>
+        </a>
+    </div>
+
+    @* Form Kartı *@
+    <div class="bg-[#1e2130] rounded-2xl border border-[#2e3245] shadow-xl overflow-hidden">
+        <form method="post" class="p-8 space-y-6">
+
+            @* Yetenek Başlığı *@
+            <div class="space-y-2">
+                <label for="Title" class="text-sm font-semibold text-slate-300 ml-1">
+                    Yetenek Başlığı
+                </label>
+                <div class="relative group">
+                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 material-symbols-outlined text-[20px] group-focus-within:text-primary transition-colors">bolt</span>
+                    <input type="text"
+                           id="Title"
+                           name="Title"
+                           placeholder="Örn: ASP.NET Core, React, Figma"
+                           class="w-full pl-12 pr-4 py-3 bg-[#101322] border border-[#2e3245] rounded-xl focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all text-white placeholder:text-slate-600"
+                           required />
+                </div>
+            </div>
+
+            @* Yetenek Seviyesi *@
+            <div class="space-y-2">
+                <label for="Levels" class="text-sm font-semibold text-slate-300 ml-1">
+                    Seviye (%)
+                </label>
+                <div class="relative group">
+                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 material-symbols-outlined text-[20px] group-focus-within:text-primary transition-colors">leaderboard</span>
+                    <input type="number"
+                           id="Levels"
+                           name="Levels"
+                           min="0"
+                           max="100"
+                           placeholder="0-100 arası bir değer girin"
+                           class="w-full pl-12 pr-12 py-3 bg-[#101322] border border-[#2e3245] rounded-xl focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all text-white placeholder:text-slate-600"
+                           required />
+                    <span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 font-bold group-focus-within:text-white transition-colors">%</span>
+                </div>
+                <p class="text-[11px] text-slate-500 ml-1 italic">Bu değer ana sayfadaki ilerleme çubuğunun (progress bar) doluluk oranını belirler.</p>
+            </div>
+
+            @* Alt Butonlar *@
+            <div class="pt-6 border-t border-[#2e3245]">
+                <div class="flex items-center justify-end gap-4">
+                    <button type="reset" class="px-6 py-3 rounded-xl text-sm font-medium text-slate-400 hover:text-white hover:bg-white/5 transition-all">
+                        Temizle
+                    </button>
+                    <button type="submit" class="flex items-center gap-2 bg-primary hover:bg-blue-600 text-white px-10 py-3 rounded-xl text-sm font-bold transition-all shadow-lg shadow-primary/20 active:scale-95">
+                        <span class="material-symbols-outlined text-[20px]">save</span>
+                        <span>Yeteneği Kaydet</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

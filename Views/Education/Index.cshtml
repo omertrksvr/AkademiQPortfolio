@@ -1,0 +1,94 @@
+﻿@model List<AkademiqPortfolio.Data.Education>
+@{
+    ViewData["Title"] = "Eğitim Yönetimi";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="space-y-8">
+    @* Üst Başlık ve Aksiyon Alanı *@
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+        <div>
+            <h2 class="text-3xl font-bold text-white tracking-tight">Eğitim Yönetimi</h2>
+            <p class="text-slate-400 mt-1">Akademik geçmişinizi ve sertifikalarınızı buradan yönetebilirsiniz.</p>
+        </div>
+        <a href="/Education/CreateEducation/"
+           class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl text-sm font-medium transition-all shadow-lg shadow-blue-600/20">
+            <span class="material-symbols-outlined text-[20px]">add</span>
+            <span>Yeni Eğitim Ekle</span>
+        </a>
+    </div>
+
+    @* Liste Kartı / Tablo *@
+    <div class="bg-[#1e2130] rounded-2xl border border-[#2e3245] overflow-hidden shadow-sm">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm text-slate-400">
+                <thead class="bg-white/5 text-xs uppercase font-semibold text-white border-b border-[#2e3245]">
+                    <tr>
+                        <th class="px-6 py-5 w-16">#</th>
+                        <th class="px-6 py-5">Okul / Kurum</th>
+                        <th class="px-6 py-5">Bölüm</th>
+                        <th class="px-6 py-5">Tarih</th>
+                        <th class="px-6 py-5 text-right">İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-[#2e3245]">
+                    @foreach (var item in Model)
+                    {
+                        <tr class="hover:bg-white/[0.02] transition-colors group">
+                            <td class="px-6 py-4 font-medium text-slate-500">@item.Id</td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-3">
+                                    @* Kurumun baş harfinden oluşan ikon *@
+                                    <div class="size-10 rounded-xl bg-blue-600/10 flex items-center justify-center text-blue-500 font-bold border border-blue-600/20">
+                                        @(!string.IsNullOrEmpty(item.InstutionName) ? item.InstutionName.Substring(0, 1).ToUpper() : "E")
+                                    </div>
+                                    <span class="font-bold text-white group-hover:text-blue-500 transition-colors">@item.InstutionName</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="text-slate-300">@item.Title</span>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-2 text-xs font-medium">
+                                    <span class="px-2 py-1 rounded bg-slate-800 text-slate-400 border border-slate-700">
+                                        @item.StartDate?.ToString("yyyy")
+                                    </span>
+                                    <span class="text-slate-600">-</span>
+                                    <span class="px-2 py-1 rounded bg-blue-600/10 text-blue-400 border border-blue-600/20">
+                                        @(item.EndDate.HasValue ? item.EndDate.Value.ToString("yyyy") : "Devam Ediyor")
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-right">
+                                <div class="flex justify-end gap-1">
+                                    <a href="/Education/UpdateEducation/@item.Id"
+                                       class="p-2 text-slate-500 hover:text-green-500 hover:bg-green-500/10 rounded-lg transition-all"
+                                       title="Güncelle">
+                                        <span class="material-symbols-outlined text-[22px]">edit</span>
+                                    </a>
+                                    <a href="/Education/DeleteEducation/@item.Id"
+                                       class="p-2 text-slate-500 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-all"
+                                       title="Sil"
+                                       onclick="return confirm('Bu eğitim kaydını silmek istediğinize emin misiniz?')">
+                                        <span class="material-symbols-outlined text-[22px]">delete</span>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        @if (!Model.Any())
+        {
+            <div class="p-20 text-center">
+                <div class="bg-[#101322] size-20 rounded-full flex items-center justify-center mx-auto mb-4 border border-[#2e3245]">
+                    <span class="material-symbols-outlined text-slate-600 text-[40px]">school</span>
+                </div>
+                <h4 class="text-white font-bold text-lg">Eğitim Kaydı Bulunamadı</h4>
+                <p class="text-slate-500 max-w-xs mx-auto mt-2">Henüz bir eğitim bilgisi eklemediniz. Yeni bir tane ekleyerek başlayın.</p>
+            </div>
+        }
+    </div>
+</div>

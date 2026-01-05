@@ -1,0 +1,74 @@
+﻿@model List<AkademiqPortfolio.Data.Message>
+@{
+    ViewData["Title"] = "Gelen Kutusu";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="space-y-8">
+    @* Üst Başlık *@
+    <div>
+        <h2 class="text-3xl font-bold text-white tracking-tight">Gelen Kutusu</h2>
+        <p class="text-slate-400 mt-1">Web siteniz üzerinden gönderilen tüm iletişim formları burada toplanır.</p>
+    </div>
+
+    @* Mesaj Listesi *@
+    <div class="bg-[#1e2130] rounded-2xl border border-[#2e3245] overflow-hidden shadow-sm">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm text-slate-400">
+                <thead class="bg-white/5 text-xs uppercase font-semibold text-white border-b border-[#2e3245]">
+                    <tr>
+                        <th class="px-6 py-5 w-16">#</th>
+                        <th class="px-6 py-5 w-64">Gönderen</th>
+                        <th class="px-6 py-5">Konu & İçerik</th>
+                        <th class="px-6 py-5 text-right">İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-[#2e3245]">
+                    @foreach (var item in Model)
+                    {
+                        <tr class="hover:bg-white/[0.02] transition-colors group cursor-pointer">
+                            <td class="px-6 py-4 font-medium text-slate-500">@item.Id</td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="size-10 rounded-full bg-blue-600/10 flex items-center justify-center text-blue-500 font-bold border border-blue-600/20">
+                                        @item.NameSurname.Substring(0, 1).ToUpper()
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="font-bold text-white">@item.NameSurname</span>
+                                        <span class="text-[11px] text-slate-500">@item.Email</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex flex-col gap-0.5">
+                                    <span class="font-semibold text-slate-200">@item.Subject</span>
+                                    <p class="text-xs text-slate-500 line-clamp-1">@item.MessageContent</p>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-right">
+                                <div class="flex justify-end gap-1">
+                                 
+                                    @* Sil butonu *@
+                                    <a href="/Message/DeleteMessage/@item.Id" class="p-2 text-slate-500 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-all" onclick="return confirm('Bu mesajı silmek istediğinize emin misiniz?')" title="Sil">
+                                        <span class="material-symbols-outlined text-[22px]">delete</span>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        @if (!Model.Any())
+        {
+            <div class="p-20 text-center">
+                <div class="bg-[#101322] size-20 rounded-full flex items-center justify-center mx-auto mb-4 border border-[#2e3245]">
+                    <span class="material-symbols-outlined text-slate-600 text-[40px]">mail_outline</span>
+                </div>
+                <h4 class="text-white font-bold text-lg">Gelen Kutusu Boş</h4>
+                <p class="text-slate-500 max-w-xs mx-auto mt-2">Şu an için herhangi bir yeni mesajınız bulunmuyor.</p>
+            </div>
+        }
+    </div>
+</div>

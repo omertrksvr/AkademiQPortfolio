@@ -1,0 +1,74 @@
+﻿@model AkademiqPortfolio.Data.Service
+@{
+    ViewData["Title"] = "Hizmet Güncelle";
+    Layout = "~/Views/Admin/Index.cshtml";
+}
+
+<div class="max-w-3xl mx-auto flex flex-col gap-8 pb-10">
+    <div class="flex items-center justify-between gap-4">
+        <div>
+            <h2 class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Hizmet Güncelle</h2>
+            <p class="text-slate-500 dark:text-slate-400 mt-1">#@Model.ServicesId numaralı hizmetin detaylarını düzenleyin.</p>
+        </div>
+        <a href="/Services/Index" class="flex items-center gap-2 text-slate-500 hover:text-primary transition-colors text-sm font-medium">
+            <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+            <span>Listeye Dön</span>
+        </a>
+    </div>
+
+    <div class="bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-surface-border shadow-sm overflow-hidden">
+        <form method="post" class="p-8 flex flex-col gap-6">
+
+            <input type="hidden" asp-for="ServicesId" />
+
+            <div class="flex flex-col gap-2">
+                <label asp-for="Title" class="text-sm font-semibold text-slate-700 dark:text-slate-300">
+                    Hizmet Başlığı
+                </label>
+                <input asp-for="Title"
+                       placeholder="Örn: Mobil Uygulama Geliştirme"
+                       class="w-full px-4 py-2.5 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-surface-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all dark:text-white placeholder:text-slate-400"
+                       required />
+            </div>
+
+            <div class="flex flex-col gap-2">
+                <label asp-for="Description" class="text-sm font-semibold text-slate-700 dark:text-slate-300">
+                    Açıklama
+                </label>
+                <textarea asp-for="Description"
+                          rows="4"
+                          placeholder="Hizmet detaylarını buraya yazın..."
+                          class="w-full px-4 py-2.5 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-surface-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all dark:text-white placeholder:text-slate-400 resize-none"
+                          required></textarea>
+            </div>
+
+            <div class="flex flex-col gap-2">
+                <label asp-for="Icon" class="text-sm font-semibold text-slate-700 dark:text-slate-300">
+                    Material İkon Adı
+                </label>
+                <div class="relative">
+                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-primary material-symbols-outlined text-[18px]">@Model.Icon</span>
+                    <input asp-for="Icon"
+                           placeholder="Örn: code, smartphone, design_services"
+                           class="w-full pl-11 pr-4 py-2.5 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-surface-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all dark:text-white placeholder:text-slate-400"
+                           required />
+                </div>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400 italic">
+                    İpucu: Mevcut ikon kutucuğun solunda önizleme olarak görünmektedir.
+                </p>
+            </div>
+
+            <hr class="border-slate-200 dark:border-surface-border/50 my-2" />
+
+            <div class="flex items-center justify-end gap-3">
+                <a href="/Services/Index" class="px-6 py-2.5 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors">
+                    İptal
+                </a>
+                <button type="submit" class="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-8 py-2.5 rounded-lg text-sm font-medium transition-all shadow-lg shadow-green-500/20 active:scale-95">
+                    <span class="material-symbols-outlined text-[20px]">sync</span>
+                    <span>Değişiklikleri Kaydet</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

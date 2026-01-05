@@ -1,0 +1,70 @@
+﻿@model AkademiqPortfolio.Data.About
+@{
+    ViewData["Title"] = "Hakkımda Bilgilerini Güncelle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="max-w-5xl mx-auto space-y-8">
+    @* Üst Başlık ve Geri Dönüş *@
+    <div class="flex items-center justify-between">
+        <div>
+            <h2 class="text-3xl font-bold text-white tracking-tight">Hakkımda Bilgilerini Düzenle</h2>
+            <p class="text-slate-400 mt-1">Profilinizin en ön planındaki kişisel bilgileri buradan güncelleyebilirsiniz.</p>
+        </div>
+        <a href="/About/Index" class="flex items-center gap-2 text-slate-400 hover:text-white transition-colors">
+            <span class="material-symbols-outlined">arrow_back</span>
+            <span class="text-sm font-medium">Listeye Dön</span>
+        </a>
+    </div>
+
+    @* Form Kartı *@
+    <div class="bg-[#1e2130] rounded-2xl border border-[#2e3245] p-8 shadow-sm">
+        <form method="post" class="space-y-6">
+            @* KRİTİK: Kaydı bulabilmek için gizli ID alanı *@
+            <input type="hidden" name="Id" value="@Model.Id" />
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                @* Başlık / Unvan *@
+                <div class="space-y-2 md:col-span-2">
+                    <label class="text-sm font-semibold text-slate-300">Ana Başlık / Unvan</label>
+                    <input type="text" name="Title" value="@Model.Title"
+                           placeholder="Örn: Full Stack Developer & UI Designer"
+                           class="w-full bg-[#101322] border border-[#2e3245] rounded-xl px-4 py-3 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+                           required />
+                </div>
+
+                @* Profil Fotoğrafı URL *@
+                <div class="space-y-2">
+                    <label class="text-sm font-semibold text-slate-300">Profil Fotoğrafı URL</label>
+                    <input type="text" name="ImageUrl" value="@Model.ImageUrl"
+                           placeholder="https://resim-linki.com/profil.jpg"
+                           class="w-full bg-[#101322] border border-[#2e3245] rounded-xl px-4 py-3 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all" />
+                </div>
+
+                @* CV Linki *@
+                <div class="space-y-2">
+                    <label class="text-sm font-semibold text-slate-300">Özgeçmiş (CV) Linki</label>
+                    <input type="text" name="Cvlink" value="@Model.Cvlink"
+                           placeholder="https://drive.google.com/cv-dosyaniz"
+                           class="w-full bg-[#101322] border border-[#2e3245] rounded-xl px-4 py-3 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all" />
+                </div>
+            </div>
+
+            @* Biyografi Metni *@
+            <div class="space-y-2">
+                <label class="text-sm font-semibold text-slate-300">Biyografi / Hakkımda Metni</label>
+                <textarea name="Description" rows="8"
+                          placeholder="Kendinizden, çalışma disiplininizden ve hedeflerinizden bahsedin..."
+                          class="w-full bg-[#101322] border border-[#2e3245] rounded-xl px-4 py-3 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all">@Model.Description</textarea>
+            </div>
+
+            @* Butonlar *@
+            <div class="flex items-center justify-end gap-4 pt-4 border-t border-[#2e3245]">
+                <a href="/About/Index" class="px-6 py-2.5 text-sm font-medium text-slate-400 hover:text-white transition-colors">Vazgeç</a>
+                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-2.5 rounded-xl text-sm font-bold shadow-lg shadow-blue-600/20 transition-all">
+                    Değişiklikleri Kaydet
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

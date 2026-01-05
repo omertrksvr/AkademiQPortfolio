@@ -1,0 +1,30 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    @await Component.InvokeAsync("AdminHead")
+</head>
+
+<body>
+    <div class="wrapper">
+        @await Component.InvokeAsync("AdminSideBar")
+
+        <!-- Page Content  -->
+        <div id="content">
+
+            @await Component.InvokeAsync("AdminNavBar")
+           
+            @RenderBody()
+
+        </div>
+    </div>
+
+    @await Component.InvokeAsync("AdminScripts")
+</body>
+
+</html>

@@ -1,0 +1,101 @@
+﻿@model List<AkademiqPortfolio.Data.ProjectsTable>
+@{
+    ViewData["Title"] = "Proje Yönetimi";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="space-y-8">
+    @* Üst Başlık ve Aksiyon Alanı *@
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+        <div>
+            <h2 class="text-3xl font-bold text-white tracking-tight">Proje Yönetimi</h2>
+            <p class="text-slate-400 mt-1">Portfolyonuzda sergilenen tüm çalışmaları buradan görebilir ve düzenleyebilirsiniz.</p>
+        </div>
+        <a asp-controller="Project" asp-action="ProjectCreate"
+           class="flex items-center justify-center gap-2 bg-primary hover:bg-blue-600 text-white px-5 py-2.5 rounded-xl text-sm font-medium transition-all shadow-lg shadow-primary/20">
+            <span class="material-symbols-outlined text-[20px]">add</span>
+            <span>Yeni Proje Ekle</span>
+        </a>
+    </div>
+
+    @* Liste Kartı / Tablo Konteynırı *@
+    <div class="bg-[#1e2130] rounded-2xl border border-[#2e3245] overflow-hidden shadow-sm">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm text-slate-400">
+                <thead class="bg-white/5 text-xs uppercase font-semibold text-white border-b border-[#2e3245]">
+                    <tr>
+                        <th class="px-6 py-5 w-16">#</th>
+                        <th class="px-6 py-5 w-24">Görsel</th>
+                        <th class="px-6 py-5">Proje Detayları</th>
+                        <th class="px-6 py-5">Kategori</th>
+                        <th class="px-6 py-5 text-right">İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-[#2e3245]">
+                    @foreach (var item in Model)
+                    {
+                        <tr class="hover:bg-white/[0.02] transition-colors group">
+                            <td class="px-6 py-4 font-medium text-slate-500">@item.ProjectId</td>
+                            <td class="px-6 py-4">
+                                @* Görsel Alanı: Kırık link durumunda fallback mekanizması *@
+                                <div class="size-14 rounded-xl bg-[#101322] border border-[#2e3245] overflow-hidden flex items-center justify-center shadow-inner group-hover:border-primary/50 transition-all p-0.5">
+                                    @if (!string.IsNullOrEmpty(item.Image))
+                                    {
+                                        <img src="@item.Image"
+                                             alt="@item.ProjectName"
+                                             class="w-full h-full object-cover rounded-lg"
+                                             onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center bg-primary/10 text-primary font-bold text-xl\'>@item.ProjectName.Substring(0,1).ToUpper()</div>';">
+                                    }
+                                    else
+                                    {
+                                        <div class="w-full h-full flex items-center justify-center bg-primary/10 text-primary font-bold text-xl uppercase">
+                                            @item.ProjectName.Substring(0, 1)
+                                        </div>
+                                    }
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex flex-col">
+                                    <span class="font-bold text-white text-base group-hover:text-primary transition-colors">@item.ProjectName</span>
+                                    @* Açıklama alanını 1 satırda sınırlayıp, çok uzunsa ... koyar *@
+                                    <span class="text-xs text-slate-500 mt-0.5 line-clamp-1 max-w-xs">@item.Title</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="inline-flex items-center px-3 py-1 rounded-lg text-[10px] font-bold tracking-widest uppercase bg-purple-500/10 text-purple-400 border border-purple-500/20 shadow-sm">
+                                    @(item.Category?.CategoryName ?? "DİĞER")
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-right">
+                                <div class="flex justify-end gap-1">
+                                    <a href="/Project/ProjectUpdate/@item.ProjectId"
+                                       class="p-2 text-slate-500 hover:text-primary hover:bg-primary/10 rounded-lg transition-all"
+                                       title="Güncelle">
+                                        <span class="material-symbols-outlined text-[22px]">edit</span>
+                                    </a>
+                                    <a href="/Project/ProjectDelete/@item.ProjectId"
+                                       class="p-2 text-slate-500 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-all"
+                                       title="Sil"
+                                       onclick="return confirm('@item.ProjectName projesini silmek istediğinize emin misiniz?')">
+                                        <span class="material-symbols-outlined text-[22px]">delete</span>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        @if (!Model.Any())
+        {
+            <div class="p-20 text-center">
+                <div class="bg-[#101322] size-20 rounded-full flex items-center justify-center mx-auto mb-4 border border-[#2e3245]">
+                    <span class="material-symbols-outlined text-slate-600 text-[40px]">folder_off</span>
+                </div>
+                <h4 class="text-white font-bold text-lg">Henüz Proje Yok</h4>
+                <p class="text-slate-500 max-w-xs mx-auto mt-2">Listeniz şu an boş. Hemen yeni bir proje ekleyerek başlayabilirsiniz.</p>
+            </div>
+        }
+    </div>
+</div>

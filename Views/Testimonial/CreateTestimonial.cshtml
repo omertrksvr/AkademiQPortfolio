@@ -1,0 +1,70 @@
+﻿@model AkademiqPortfolio.Data.Testimonial
+@{
+    ViewData["Title"] = "Yeni Referans Ekle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="max-w-4xl mx-auto space-y-8">
+    @* Üst Başlık ve Geri Dönüş *@
+    <div class="flex items-center justify-between">
+        <div>
+            <h2 class="text-3xl font-bold text-white tracking-tight">Yeni Referans Ekle</h2>
+            <p class="text-slate-400 mt-1">Sizin hakkınızda görüş bildiren kişileri sisteme kaydedin.</p>
+        </div>
+        <a href="/Testimonial/Index" class="flex items-center gap-2 text-slate-400 hover:text-white transition-colors">
+            <span class="material-symbols-outlined">arrow_back</span>
+            <span class="text-sm font-medium">Listeye Dön</span>
+        </a>
+    </div>
+
+    @* Form Kartı *@
+    <div class="bg-[#1e2130] rounded-2xl border border-[#2e3245] p-8 shadow-sm">
+        <form method="post" class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                @* Ad Soyad *@
+                <div class="space-y-2">
+                    <label class="text-sm font-semibold text-slate-300">Ad Soyad</label>
+                    <input type="text" name="NameSurname"
+                           placeholder="Örn: Murat Yücedağ"
+                           class="w-full bg-[#101322] border border-[#2e3245] rounded-xl px-4 py-3 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+                           required />
+                </div>
+
+                @* Unvan *@
+                <div class="space-y-2">
+                    <label class="text-sm font-semibold text-slate-300">Unvan / Görev</label>
+                    <input type="text" name="Title"
+                           placeholder="Örn: Yazılım Mühendisi"
+                           class="w-full bg-[#101322] border border-[#2e3245] rounded-xl px-4 py-3 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+                           required />
+                </div>
+
+                @* Profil Fotoğrafı URL *@
+                <div class="space-y-2 md:col-span-2">
+                    <label class="text-sm font-semibold text-slate-300">Fotoğraf URL (Opsiyonel)</label>
+                    <input type="text" name="ImageUrl"
+                           placeholder="https://resim-linki.com/foto.jpg"
+                           class="w-full bg-[#101322] border border-[#2e3245] rounded-xl px-4 py-3 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all" />
+                    <p class="text-[11px] text-slate-500 italic">Boş bırakılırsa ismin baş harfi otomatik gösterilir.</p>
+                </div>
+            </div>
+
+            @* Yorum / Görüş *@
+            <div class="space-y-2">
+                <label class="text-sm font-semibold text-slate-300">Referans Görüşü / Yorum</label>
+                <textarea name="Comment" rows="5"
+                          placeholder="Kişinin sizin hakkınızdaki değerli yorumunu buraya yazın..."
+                          class="w-full bg-[#101322] border border-[#2e3245] rounded-xl px-4 py-3 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+                          required></textarea>
+            </div>
+
+            @* Butonlar *@
+            <div class="flex items-center justify-end gap-4 pt-4 border-t border-[#2e3245]">
+                <a href="/Testimonial/Index" class="px-6 py-2.5 text-sm font-medium text-slate-400 hover:text-white transition-colors">Vazgeç</a>
+                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-2.5 rounded-xl text-sm font-bold shadow-lg shadow-blue-600/20 transition-all">
+                    Referansı Kaydet
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
